@@ -41,7 +41,7 @@ class ImageProcess:
         self.assert_image()
         cv_gray = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
         r, g, b = cv2.split(self.image)
-        avg_gray = np.float32(r/3 + g/3 + b/3)
+        avg_gray = np.float32(r / 3 + g / 3 + b / 3)
         plt.subplot(1, 2, 1)
         plt.imshow(cv_gray, cmap="gray")
         plt.title("Weighted Gray")
