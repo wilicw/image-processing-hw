@@ -50,6 +50,7 @@ class GraphicsInterface(QWidget):
         hw1_1_layout.addWidget(color_sep_button)
         color_tranformation_button.clicked.connect(self.processor.color_transformation)
         hw1_1_layout.addWidget(color_tranformation_button)
+        color_extraction_button.clicked.connect(self.processor.color_extration)
         hw1_1_layout.addWidget(color_extraction_button)
         hw1_1_gp.setLayout(hw1_1_layout)
         v1layout.addWidget(hw1_1_gp)

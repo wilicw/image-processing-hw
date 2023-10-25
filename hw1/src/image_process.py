@@ -50,3 +50,19 @@ class ImageProcess:
         plt.title("Average Gray")
         plt.show()
 
+    def color_extration(self):
+        self.assert_image()
+        hsv_image = cv2.cvtColor(self.image, cv2.COLOR_RGB2HSV)
+        lower = np.uint8([20, 0, 0])
+        upper = np.uint8([85, 255, 255])
+        mask = cv2.inRange(hsv_image, lower, upper)
+        removed_image = cv2.bitwise_not(
+            cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR), self.image.copy(), mask
+        )
+        plt.subplot(1, 2, 1)
+        plt.imshow(self.image)
+        plt.title("Original")
+        plt.subplot(1, 2, 2)
+        plt.imshow(removed_image)
+        plt.title("Removed")
+        plt.show()
