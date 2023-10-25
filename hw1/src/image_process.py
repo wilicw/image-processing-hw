@@ -92,3 +92,16 @@ class ImageProcess:
         cv2.createTrackbar("Blur", "Bilateral Blur", 1, 5, self.bilateral_callback)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+    def median_callback(self, x):
+        self.assert_image()
+        blur = cv2.medianBlur(self.image, 2 * x + 1)
+        cv2.imshow("Median Blur", blur)
+
+    def median_filter(self):
+        self.assert_image()
+        cv2.namedWindow("Median Blur")
+        cv2.imshow("Median Blur", self.image)
+        cv2.createTrackbar("Blur", "Median Blur", 1, 5, self.median_callback)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()

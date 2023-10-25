@@ -65,6 +65,7 @@ class GraphicsInterface(QWidget):
         hw1_2_layout.addWidget(guassian_button)
         bilateral_button.clicked.connect(self.processor.bilateral_filter)
         hw1_2_layout.addWidget(bilateral_button)
+        median_button.clicked.connect(self.processor.median_filter)
         hw1_2_layout.addWidget(median_button)
         hw1_2_gp.setLayout(hw1_2_layout)
         v1layout.addWidget(hw1_2_gp)
