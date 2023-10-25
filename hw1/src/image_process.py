@@ -105,3 +105,32 @@ class ImageProcess:
         cv2.createTrackbar("Blur", "Median Blur", 1, 5, self.median_callback)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+    def conv2D(self, image, kernel):
+        kernel = np.flipud(np.fliplr(kernel))
+        kernel_size = kernel.shape[0]
+        image_height = image.shape[0]
+        image_width = image.shape[1]
+        padding_size = kernel_size // 2
+        padding_image = np.zeros(
+            (image_height + padding_size * 2, image_width + padding_size * 2)
+        )
+        padding_image[padding_size:-padding_size, padding_size:-padding_size] = image
+        output_image = np.zeros(image.shape)
+        for i in range(image_height):
+            for j in range(image_width):
+                output_image[i, j] = (
+                    kernel * padding_image[i : i + kernel_size, j : j + kernel_size]
+                ).sum()
+        return output_image
+
+    def sobelx(self):
+        self.assert_image()
+        filter = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
+        gray = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
+        gray = cv2.GaussianBlur(gray, (3, 3), 0)
+        sobelX = self.conv2D(gray, filter)
+        sobelX = np.uint8(np.absolute(sobelX))
+        cv2.imshow("Sobel X", sobelX)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()

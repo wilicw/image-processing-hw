@@ -77,6 +77,7 @@ class GraphicsInterface(QWidget):
         sobely_button = QPushButton("3.2 Sobel Y")
         combination_threshold_button = QPushButton("3.3 Combination and Threshold")
         gradient_angle_button = QPushButton("3.4 Gradient Angle")
+        sobelx_button.clicked.connect(self.processor.sobelx)
         hw1_3_layout.addWidget(sobelx_button)
         hw1_3_layout.addWidget(sobely_button)
         hw1_3_layout.addWidget(combination_threshold_button)
