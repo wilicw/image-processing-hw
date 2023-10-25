@@ -74,7 +74,7 @@ class ImageProcess:
 
     def gaussian_filter(self):
         self.assert_image()
-        cv2.namedWindow('Gaussian Blur')
+        cv2.namedWindow("Gaussian Blur")
         cv2.imshow("Gaussian Blur", self.image)
         cv2.createTrackbar("Blur", "Gaussian Blur", 1, 5, self.gaussian_callback)
         cv2.waitKey(0)
