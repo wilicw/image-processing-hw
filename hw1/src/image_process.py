@@ -134,3 +134,15 @@ class ImageProcess:
         cv2.imshow("Sobel X", sobelX)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+    def sobely(self):
+        self.assert_image()
+        filter = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
+        gray = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
+        gray = cv2.GaussianBlur(gray, (3, 3), 0)
+        sobelY = self.conv2D(gray, filter)
+        sobelY = np.uint8(np.absolute(sobelY))
+        cv2.imshow("Sobel Y", sobelY)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
