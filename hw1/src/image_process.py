@@ -80,3 +80,15 @@ class ImageProcess:
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
+    def bilateral_callback(self, x):
+        self.assert_image()
+        blur = cv2.bilateralFilter(self.image, 2 * x + 1, 75, 75)
+        cv2.imshow("Bilateral Blur", blur)
+
+    def bilateral_filter(self):
+        self.assert_image()
+        cv2.namedWindow("Bilateral Blur")
+        cv2.imshow("Bilateral Blur", self.image)
+        cv2.createTrackbar("Blur", "Bilateral Blur", 1, 5, self.bilateral_callback)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
