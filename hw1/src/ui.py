@@ -13,8 +13,9 @@ from PyQt5.QtWidgets import (
 
 
 class GraphicsInterface(QWidget):
-    def __init__(self):
+    def __init__(self, processor):
         super().__init__()
+        self.processor = processor
         self.initUI()
 
     def initUI(self):
@@ -29,6 +30,12 @@ class GraphicsInterface(QWidget):
         load_layout = QVBoxLayout()
         load_button_1 = QPushButton("Load Image 1")
         load_button_2 = QPushButton("Load Image 2")
+        load_button_1.clicked.connect(
+            lambda: self.processor.add_image(self.load_image("image1"))
+        )
+        load_button_2.clicked.connect(
+            lambda: self.processor.add_image(self.load_image("image2"))
+        )
         load_layout.addWidget(load_button_1)
         load_layout.addWidget(load_button_2)
         layout.addLayout(load_layout)
@@ -39,6 +46,7 @@ class GraphicsInterface(QWidget):
         color_sep_button = QPushButton("1.1 Color Separation")
         color_tranformation_button = QPushButton("1.2 Color Transformation")
         color_extraction_button = QPushButton("1.3 Color Extraction")
+        color_sep_button.clicked.connect(self.processor.color_separation)
         hw1_1_layout.addWidget(color_sep_button)
         hw1_1_layout.addWidget(color_tranformation_button)
         hw1_1_layout.addWidget(color_extraction_button)
@@ -125,3 +133,8 @@ class GraphicsInterface(QWidget):
 
         self.setLayout(layout)
         self.show()
+
+    def load_image(self, image):
+        return QFileDialog.getOpenFileName(
+            self, "Open file", image, "Image files (*.jpg *.gif *.png)"
+        )[0]
