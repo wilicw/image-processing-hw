@@ -48,6 +48,7 @@ class GraphicsInterface(QWidget):
         color_extraction_button = QPushButton("1.3 Color Extraction")
         color_sep_button.clicked.connect(self.processor.color_separation)
         hw1_1_layout.addWidget(color_sep_button)
+        color_tranformation_button.clicked.connect(self.processor.color_transformation)
         hw1_1_layout.addWidget(color_tranformation_button)
         hw1_1_layout.addWidget(color_extraction_button)
         hw1_1_gp.setLayout(hw1_1_layout)
