@@ -66,3 +66,17 @@ class ImageProcess:
         plt.imshow(removed_image)
         plt.title("Removed")
         plt.show()
+
+    def gaussian_callback(self, x):
+        self.assert_image()
+        blur = cv2.GaussianBlur(self.image, (2 * x + 1, 2 * x + 1), 0)
+        cv2.imshow("Gaussian Blur", blur)
+
+    def gaussian_filter(self):
+        self.assert_image()
+        cv2.namedWindow('Gaussian Blur')
+        cv2.imshow("Gaussian Blur", self.image)
+        cv2.createTrackbar("Blur", "Gaussian Blur", 1, 5, self.gaussian_callback)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+

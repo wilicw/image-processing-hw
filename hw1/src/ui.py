@@ -61,6 +61,7 @@ class GraphicsInterface(QWidget):
         guassian_button = QPushButton("2.1 Guassian Filter")
         bilateral_button = QPushButton("2.2 Bilateral Filter")
         median_button = QPushButton("2.3 Median Filter")
+        guassian_button.clicked.connect(self.processor.gaussian_filter)
         hw1_2_layout.addWidget(guassian_button)
         hw1_2_layout.addWidget(bilateral_button)
         hw1_2_layout.addWidget(median_button)
