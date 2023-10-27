@@ -1,9 +1,10 @@
 import cv2, os
 from matplotlib import pyplot as plt
 from torchvision.transforms import v2
-from PIL import Image 
+from PIL import Image
 
-class cifar_vgg:
+
+class cifar_inference:
     def __init__(self):
         self.transforms = v2.Compose(
             [
