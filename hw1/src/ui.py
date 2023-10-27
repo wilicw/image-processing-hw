@@ -10,12 +10,14 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QGroupBox,
 )
+from PyQt5.QtGui import QImage, QPixmap
 
 
 class GraphicsInterface(QWidget):
-    def __init__(self, processor):
+    def __init__(self, processor, vgg_processor):
         super().__init__()
         self.processor = processor
+        self.vgg_processor = vgg_processor
         self.initUI()
 
     def initUI(self):
@@ -132,6 +134,20 @@ class GraphicsInterface(QWidget):
         hw1_5_layout = QVBoxLayout()
         hw1_5_gp = QGroupBox("5. VGG19")
         vgg19_load_button = QPushButton("Load Image")
+        vgg19_load_button.clicked.connect(
+            lambda: self.vgg_processor.add_image(self.load_image("image_inference"))
+            or self.prediction_image.setPixmap(
+                QPixmap(
+                    QImage(
+                        self.vgg_processor.show_image,
+                        self.vgg_processor.show_image.shape[1],
+                        self.vgg_processor.show_image.shape[0],
+                        3 * self.vgg_processor.show_image.shape[1],
+                        QImage.Format_RGB888,
+                    )
+                )
+            )
+        )
         arguementation_button = QPushButton("5.1 Show arguemented images")
         model_structure_button = QPushButton("5.2 Show Model Structure")
         acc_loss_button = QPushButton("5.3 Show Accuracy and Loss")
@@ -143,9 +159,9 @@ class GraphicsInterface(QWidget):
         hw1_5_layout.addWidget(acc_loss_button)
         hw1_5_layout.addWidget(inference_button)
         hw1_5_layout.addWidget(QLabel("Prediction:"))
-        prediction_image = QLabel()
-        prediction_image.setFixedSize(64, 64)
-        hw1_5_layout.addWidget(prediction_image)
+        self.prediction_image = QLabel()
+        self.prediction_image.setFixedSize(128, 128)
+        hw1_5_layout.addWidget(self.prediction_image)
 
         hw1_5_gp.setLayout(hw1_5_layout)
         v2layout.addWidget(hw1_5_gp)
