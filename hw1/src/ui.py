@@ -151,6 +151,14 @@ class GraphicsInterface(QWidget):
         arguementation_button = QPushButton("5.1 Show arguemented images")
         arguementation_button.clicked.connect(self.vgg_processor.show_augmented_images)
         model_structure_button = QPushButton("5.2 Show Model Structure")
+        model_structure_button.clicked.connect(
+            lambda: print(
+                __import__("torchsummary").summary(
+                    __import__("torchvision").models.vgg19(num_classes=10),
+                    input_size=(3, 32, 32),
+                )
+            )
+        )
         acc_loss_button = QPushButton("5.3 Show Accuracy and Loss")
         inference_button = QPushButton("5.4 Inference")
 
