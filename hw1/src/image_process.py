@@ -154,7 +154,7 @@ class ImageProcess:
         gray = cv2.GaussianBlur(gray, (3, 3), 0)
         sobelX = self.conv2D(gray, filterX)
         sobelY = self.conv2D(gray, filterY)
-        sobel = np.sqrt(sobelX ** 2 + sobelY ** 2)
+        sobel = np.sqrt(sobelX**2 + sobelY**2)
         sobel = np.uint8(np.absolute(sobel))
         cv2.imshow("Sobel", sobel)
         cv2.waitKey(0)
