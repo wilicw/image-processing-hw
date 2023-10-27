@@ -149,6 +149,7 @@ class GraphicsInterface(QWidget):
             )
         )
         arguementation_button = QPushButton("5.1 Show arguemented images")
+        arguementation_button.clicked.connect(self.vgg_processor.show_augmented_images)
         model_structure_button = QPushButton("5.2 Show Model Structure")
         acc_loss_button = QPushButton("5.3 Show Accuracy and Loss")
         inference_button = QPushButton("5.4 Inference")
