@@ -100,9 +100,13 @@ class GraphicsInterface(QWidget):
 
         hw1_4_input_layout = QVBoxLayout()
         rotation_input = QLineEdit()
+        rotation_input.setPlaceholderText("0")
         scaling_input = QLineEdit()
+        scaling_input.setPlaceholderText("1")
         tx_input = QLineEdit()
+        tx_input.setPlaceholderText("0")
         ty_input = QLineEdit()
+        ty_input.setPlaceholderText("0")
         hw1_4_input_layout.addWidget(rotation_input)
         hw1_4_input_layout.addWidget(scaling_input)
         hw1_4_input_layout.addWidget(tx_input)
@@ -110,6 +114,16 @@ class GraphicsInterface(QWidget):
         hw1_4_sub_layout.addLayout(hw1_4_input_layout)
         hw1_4_layout.addLayout(hw1_4_sub_layout)
         apply_transform_button = QPushButton("4 Transforms")
+        apply_transform_button.clicked.connect(
+            lambda: self.processor.transformation(
+                float(rotation_input.text() or 0),
+                float(scaling_input.text() or 1),
+                (
+                    float(tx_input.text() or 0),
+                    float(ty_input.text() or 0),
+                ),
+            )
+        )
         hw1_4_layout.addWidget(apply_transform_button)
         hw1_4_gp.setLayout(hw1_4_layout)
         v2layout.addWidget(hw1_4_gp)

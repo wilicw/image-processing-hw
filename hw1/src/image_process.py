@@ -160,3 +160,33 @@ class ImageProcess:
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
+
+    def __rotation(self, image, angle):
+        object_center = (240, 200)
+        height, width = image.shape[:2]
+        rotation_matrix = cv2.getRotationMatrix2D(object_center, angle, 1)
+        return cv2.warpAffine(image, rotation_matrix, (width, height))
+
+    def __scaling(self, image, scaling):
+        height, width = image.shape[:2]
+        canvas = np.zeros((height, width, 3), dtype=np.uint8)
+        resized = cv2.resize(image, (int(width * scaling), int(height * scaling)))
+        canvas[0:resized.shape[0], 0:resized.shape[1]] = resized
+        return canvas
+
+    def __translation(self, image, translation):
+        tx, ty = translation
+        height, width = image.shape[:2]
+        translation_matrix = np.array([[1, 0, tx], [0, 1, ty]], dtype=np.float32)
+        return cv2.warpAffine(image, translation_matrix, (width, height))
+
+    def transformation(self, rotatation, scaling, translation):
+        self.assert_image()
+        image = cv2.cvtColor(self.image, cv2.COLOR_RGB2BGR).copy()
+        image = self.__rotation(image, rotatation)
+        image = self.__scaling(image, scaling)
+        image = self.__translation(image, translation)
+        cv2.imshow("Transformation", image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
