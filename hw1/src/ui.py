@@ -154,7 +154,7 @@ class GraphicsInterface(QWidget):
         model_structure_button.clicked.connect(
             lambda: print(
                 __import__("torchsummary").summary(
-                    __import__("torchvision").models.vgg19(num_classes=10),
+                    __import__("torchvision").models.vgg19_bn(num_classes=10),
                     input_size=(3, 32, 32),
                 )
             )
