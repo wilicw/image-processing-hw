@@ -1,4 +1,7 @@
 all:
 	poetry run python3 src/main.py
 
-PHONY: all
+train:
+	poetry run python3 src/cifar_train.py
+
+PHONY: all train

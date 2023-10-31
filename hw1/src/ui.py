@@ -1,16 +1,15 @@
 from PyQt5.QtWidgets import (
-    QApplication,
     QWidget,
     QPushButton,
     QVBoxLayout,
     QLabel,
     QFileDialog,
-    QGridLayout,
     QLineEdit,
     QHBoxLayout,
     QGroupBox,
 )
 from PyQt5.QtGui import QImage, QPixmap
+import matplotlib.pyplot as plt
 
 
 class GraphicsInterface(QWidget):
@@ -160,7 +159,10 @@ class GraphicsInterface(QWidget):
             )
         )
         acc_loss_button = QPushButton("5.3 Show Accuracy and Loss")
+
         inference_button = QPushButton("5.4 Inference")
+        self.inference_result = QLabel()
+        inference_button.clicked.connect(self.inference_callback)
 
         hw1_5_layout.addWidget(vgg19_load_button)
         hw1_5_layout.addWidget(arguementation_button)
@@ -168,6 +170,7 @@ class GraphicsInterface(QWidget):
         hw1_5_layout.addWidget(acc_loss_button)
         hw1_5_layout.addWidget(inference_button)
         hw1_5_layout.addWidget(QLabel("Prediction:"))
+        hw1_5_layout.addWidget(self.inference_result)
         self.prediction_image = QLabel()
         self.prediction_image.setFixedSize(128, 128)
         hw1_5_layout.addWidget(self.prediction_image)
@@ -185,3 +188,10 @@ class GraphicsInterface(QWidget):
         return QFileDialog.getOpenFileName(
             self, "Open file", image, "Image files (*.jpg *.gif *.png)"
         )[0]
+
+    def inference_callback(self):
+        result = self.vgg_processor.inference()
+        prediction = str(self.vgg_processor.classes[result[0].argmax()])
+        self.inference_result.setText(prediction)
+        plt.bar(self.vgg_processor.classes, result[0].detach().numpy())
+        plt.show()
