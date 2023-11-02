@@ -13,12 +13,11 @@ class ImageProcess:
     def add_image(self, image):
         print(image)
         self.image = cv2.imread(image)
-        self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
 
     def color_separation(self):
         self.assert_image()
 
-        r, g, b = cv2.split(self.image)
+        r, g, b = cv2.split(cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))
         rimg = cv2.merge([r, np.zeros_like(r), np.zeros_like(r)])
         gimg = cv2.merge([np.zeros_like(g), g, np.zeros_like(g)])
         bimg = cv2.merge([np.zeros_like(b), np.zeros_like(b), b])
@@ -39,8 +38,10 @@ class ImageProcess:
 
     def color_transformation(self):
         self.assert_image()
-        cv_gray = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
-        r, g, b = cv2.split(self.image)
+        cv_gray = cv2.cvtColor(
+            cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB), cv2.COLOR_RGB2GRAY
+        )
+        r, g, b = cv2.split(cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))
         avg_gray = np.float32(r / 3 + g / 3 + b / 3)
         plt.subplot(1, 2, 1)
         plt.imshow(cv_gray, cmap="gray")
@@ -52,15 +53,17 @@ class ImageProcess:
 
     def color_extration(self):
         self.assert_image()
-        hsv_image = cv2.cvtColor(self.image, cv2.COLOR_RGB2HSV)
+        hsv_image = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
         lower = np.uint8([20, 0, 0])
         upper = np.uint8([85, 255, 255])
         mask = cv2.inRange(hsv_image, lower, upper)
         removed_image = cv2.bitwise_not(
-            cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR), self.image.copy(), mask
+            cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR),
+            cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB).copy(),
+            mask,
         )
         plt.subplot(1, 2, 1)
-        plt.imshow(self.image)
+        plt.imshow(cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))
         plt.title("Original")
         plt.subplot(1, 2, 2)
         plt.imshow(removed_image)
@@ -181,7 +184,7 @@ class ImageProcess:
 
     def transformation(self, rotatation, scaling, translation):
         self.assert_image()
-        image = cv2.cvtColor(self.image, cv2.COLOR_RGB2BGR).copy()
+        image = self.image.copy()
         image = self.__rotation(image, rotatation)
         image = self.__scaling(image, scaling)
         image = self.__translation(image, translation)
