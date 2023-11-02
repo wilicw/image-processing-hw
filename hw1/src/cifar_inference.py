@@ -68,3 +68,9 @@ class cifar_inference:
         result = self.model(input.unsqueeze(0))
         result = torch.nn.functional.softmax(result, dim=1)
         return result
+
+    def accuracy_loss(self):
+        result = Image.open("fig.png")
+        plt.imshow(result)
+        plt.show()
+

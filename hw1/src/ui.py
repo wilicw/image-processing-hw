@@ -159,7 +159,7 @@ class GraphicsInterface(QWidget):
             )
         )
         acc_loss_button = QPushButton("5.3 Show Accuracy and Loss")
-
+        acc_loss_button.clicked.connect(self.vgg_processor.accuracy_loss)
         inference_button = QPushButton("5.4 Inference")
         self.inference_result = QLabel()
         inference_button.clicked.connect(self.inference_callback)
