@@ -160,7 +160,6 @@ class ImageProcess:
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-
     def __rotation(self, image, angle):
         object_center = (240, 200)
         height, width = image.shape[:2]
@@ -171,7 +170,7 @@ class ImageProcess:
         height, width = image.shape[:2]
         canvas = np.zeros((height, width, 3), dtype=np.uint8)
         resized = cv2.resize(image, (int(width * scaling), int(height * scaling)))
-        canvas[0:resized.shape[0], 0:resized.shape[1]] = resized
+        canvas[0 : resized.shape[0], 0 : resized.shape[1]] = resized
         return canvas
 
     def __translation(self, image, translation):
@@ -189,4 +188,3 @@ class ImageProcess:
         cv2.imshow("Transformation", image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-
