@@ -80,6 +80,7 @@ class ImageProcess:
         cv2.namedWindow("Gaussian Blur")
         cv2.imshow("Gaussian Blur", self.image)
         cv2.createTrackbar("Blur", "Gaussian Blur", 1, 5, self.gaussian_callback)
+        cv2.setTrackbarMin("Blur", "Gaussian Blur", 1)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -93,6 +94,7 @@ class ImageProcess:
         cv2.namedWindow("Bilateral Blur")
         cv2.imshow("Bilateral Blur", self.image)
         cv2.createTrackbar("Blur", "Bilateral Blur", 1, 5, self.bilateral_callback)
+        cv2.setTrackbarMin("Blur", "Bilateral Blur", 1)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -106,6 +108,7 @@ class ImageProcess:
         cv2.namedWindow("Median Blur")
         cv2.imshow("Median Blur", self.image)
         cv2.createTrackbar("Blur", "Median Blur", 1, 5, self.median_callback)
+        cv2.setTrackbarMin("Blur", "Median Blur", 1)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
