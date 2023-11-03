@@ -84,6 +84,7 @@ class GraphicsInterface(QWidget):
         hw1_3_layout.addWidget(sobely_button)
         combination_threshold_button.clicked.connect(self.processor.sobel)
         hw1_3_layout.addWidget(combination_threshold_button)
+        gradient_angle_button.clicked.connect(self.processor.gradient_angle)
         hw1_3_layout.addWidget(gradient_angle_button)
         hw1_3_gp.setLayout(hw1_3_layout)
         v1layout.addWidget(hw1_3_gp)

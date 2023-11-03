@@ -163,6 +163,38 @@ class ImageProcess:
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
+    def gradient_angle(self):
+        self.assert_image()
+        filterX = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
+        filterY = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
+        gray = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
+        gray = cv2.GaussianBlur(gray, (3, 3), 0)
+        sobelX = self.conv2D(gray, filterX)
+        sobelY = self.conv2D(gray, filterY)
+        phase = np.arctan2(sobelY, sobelX) * 180 / np.pi
+        phase[phase < 0] += 360
+        mask_1 = phase.copy()
+        mask_2 = phase.copy()
+
+        mask_1[(phase >= 120) & (phase < 180)] = 255
+        mask_1[(phase < 120) | (phase >= 180)] = 0
+
+        mask_2[(phase >= 210) & (phase < 330)] = 255
+        mask_2[(phase < 210) | (phase >= 330)] = 0
+
+        mask_1 = np.uint8(mask_1)
+        mask_2 = np.uint8(mask_2)
+
+        sobel = np.sqrt(sobelX**2 + sobelY**2)
+        sobel = np.uint8(np.absolute(sobel))
+
+        result_1 = cv2.bitwise_and(sobel, mask_1)
+        result_2 = cv2.bitwise_and(sobel, mask_2)
+
+        cv2.imshow("Gradient Angle", np.vstack([result_1, result_2]))
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
     def __rotation(self, image, angle):
         object_center = (240, 200)
         height, width = image.shape[:2]
