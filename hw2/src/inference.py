@@ -80,7 +80,7 @@ class cat_dog_inference:
 
     def compare(self):
         x = ["random erase", "without random erase"]
-        y = [0.956, 0.97]
+        y = [0.941, 0.956]
         plt.bar(x, y)
         plt.title("Comparison")
         plt.xlabel("Method")
